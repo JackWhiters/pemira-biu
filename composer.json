@@ -1,0 +1,15 @@
+{
+    "name": "asus/epemira",
+    "autoload": {
+        "psr-4": {
+            "Asus\\Epemira\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jackwhiters",
+            "email": "jackwhiters55@gmail.com"
+        }
+    ],
+    "require": {}
+}
