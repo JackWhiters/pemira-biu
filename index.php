@@ -68,6 +68,7 @@
 
                 <img src="assets/img/klogo2.png" alt="" class="i-home__img">
             </div>
+            
         </section>
 
         <!--==================== NEWS ====================-->

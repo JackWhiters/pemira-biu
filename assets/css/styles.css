@@ -7,14 +7,14 @@
                                                         --header-height: 3.5rem;
                                                         /*========== Colors ==========*/
                                                         --hue: 14;
-                                                        --first-color: hsl(var(--hue), 91%, 54%);
+                                                        --first-color: hsl(var(--hue), 81%, 54%);
                                                         --first-color-alt: hsl(var(--hue), 91%, 50%);
-                                                        --title-color: hsl(var(--hue), 4%, 100%);
-                                                        --text-color: hsl(var(--hue), 4%, 85%);
+                                                        --title-color: black;
+                                                        --text-color: hsl(var(--hue), 4%, 55%);
                                                         --text-color-light: hsl(var(--hue), 4%, 55%);
                                                         /*Green gradient*/
-                                                        --body-color: linear-gradient(90deg, hsl(103, 29%, 51%) 0%, hsl(86, 43%, 17%) 100%);
-                                                        --container-color: linear-gradient(90deg, hsl(103, 29%, 51%) 0%, hsl(86, 43%, 17%) 100%);
+                                                        --body-color:#F0FFF0;
+                                                        --container-color: hsl(145, 31%, 88%);
                                                         /*Red gradient*/
                                                         /* --body-color: linear-gradient(90deg, hsl(360, 28%, 40%) 0%, hsl(18, 28%, 40%) 100%);
 --container-color: linear-gradient(136deg, hsl(360, 28%, 35%) 0%, hsl(18, 28%, 35%) 100%); */
@@ -233,7 +233,7 @@
                                                     /* Change background header */
                                                     
                                                     .scroll-header {
-                                                        background: var(--container-color);
+                                                        background: var(--body-color);
                                                         box-shadow: 0 4px 4px -4px rgba(0,0,0,.2);
                                                     }
                                                     /* Active link */

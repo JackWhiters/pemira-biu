@@ -247,6 +247,7 @@ if(isset($_POST['login'])){
     <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script>
     <!-- Custom scripts -->
+    
 </body>
 
 </html>
