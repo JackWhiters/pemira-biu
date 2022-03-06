@@ -1,10 +1,18 @@
 <?php
 session_start();
+include '../koneksi.php';
+include "check_token.php";  // Check user token
 if ( !isset($_SESSION["login"]) ) {
   header("location:../index.php");
   exit;
 }
-include'../koneksi.php';
+
+// Check user login or not
+if(!isset($_SESSION['nim'])){
+    header("location:../index.php");
+ }
+ 
+
 
 if(isset($_POST['simpan'])) {
   date_default_timezone_set('Asia/jakarta');
@@ -160,6 +168,7 @@ if(isset($_POST['simpan'])) {
             </nav>
             <!-- Navbar End -->
 
+           
 
             <!-- Surat Suara -->
             <div class="container-fluid pt-4 px-4">
@@ -184,6 +193,29 @@ if(isset($_POST['simpan'])) {
                         <br>
                     </div>
                     
+  <!-- View Modal -->
+  <div class="modal fade" id="visimisiModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">VISI DAN MISI</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <h4 class="id_view"></h4>
+                    <h4 class="fname_view"></h4>
+                    <h4 class="lname_view"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!--AKHIR VIEW MODAL !-->
             
                     <div class="alert alert-success" style="background-color: white;">
                         <form action="" method="post">
@@ -206,6 +238,10 @@ if(isset($_POST['simpan'])) {
                                             <td align="center"><h2><?php echo $d['nm_paslon_ketua']; ?></h2></td>
                                             <td align="center"><h2><?php echo $d['nm_paslon_wakil']; ?></h2></td>
                                         </tr>
+                                    <tr>
+                                            <td colspan="2" style="text-align: center;"><button type="button" class="userinfo btn btn-primary" data-id='<?php echo $d['id']; ?>' data-bs-toggle="modal" data-bs-target="#visimisiModal">
+Lihat Visi & Misi</button></td>
+                                        </tr>
                                         <tr>
                                             <td colspan="2" style="text-align: center; padding: 20px; background-color: white;"><input type="radio" class="form-check-input" required="required" name="nomor_paslon" value="<?php echo $d['no_urut']; ?>"></td>
                                         </tr>
@@ -216,7 +252,7 @@ if(isset($_POST['simpan'])) {
                             </div>    
                         </form> 
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- Surat Suara End -->
 
@@ -244,8 +280,26 @@ if(isset($_POST['simpan'])) {
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
+    <script type='text/javascript'>
+            $(document).ready(function(){
+                $('.userinfo').click(function(){
+                    var userid = $(this).data('id');
+                    $.ajax({
+                        url: 'modal.php',
+                        type: 'post',
+                        data: {userid: userid},
+                        success: function(response){ 
+                            $('.modal-body').html(response); 
+                            $('#empModal').modal('show'); 
+                        }
+                    });
+                });
+            });
+    </script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+
 </body>
 
 </html>

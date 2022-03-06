@@ -15,16 +15,17 @@
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
 
     <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles2.css">
 
     <title>BEM BIU</title>
 </head>
 
 <body>
     <!--==================== HEADER ====================-->
+    
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#" class="nav__logo">
+            <a href="index.php" class="nav__logo">
                 <img src="assets/img/klogo2.png" alt="" class="nav__logo-img"> BEM BIU
             </a>
 
@@ -58,8 +59,21 @@
     </header>
 
     <!--==================== HOME ====================-->
+    <div class="wave"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M-115.75,-254.46 C79.88,352.34 252.58,-101.28 280.22,268.33 L176.51,161.59 L-8.01,232.76 Z" style="stroke: none; fill: #66ffcc;"></path></svg></div>
+    
     <main class="main">
-        <section class="home section" id="home">
+        <section class="section i__home" id="home">
+            <div class="i-home__container container grid">
+                <div class="i-home__data">
+                    <h2 class="section__title about__title">PEMIRA BADAN <br> EKSEKUTIF MAHASISWA <br> UNIVERSITAS BINA INSANI </h2>
+                    <a href="#news" class="button">Mulai</a>
+                </div>
+
+                <img src="assets/img/klogo2.png" alt="" class="i-home__img">
+            </div>
+        </section>
+        <!--
+        <section class="i__home section" id="home">
             <div class="i-home__container container grid">
                 <div class="i-home__data">
                     <h2 class="i-home__title">Pemira Badan<br> Eksekutif Mahasiswa<br> BINA INSANI UNIVERSITY</h2>
@@ -70,7 +84,9 @@
             </div>
             
         </section>
-
+-->
+        
+        <div class="grid__container">
         <!--==================== NEWS ====================-->
         <section class="section newsletter" id="news">
             <div class="newsletter__container container">
@@ -117,7 +133,7 @@
                             <div class="home__data">
                                 <h3 class="home__subtitle">PASLON 1</h3>
                                 <h1 class="home__title">nama &<br> nama</h1>
-                                <p class="home__description">visi & misi mungkin
+                                <p class="home__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit atque provident perspiciatis eligendi illo! Explicabo laborum eum, iure consequuntur similique, facere ex mollitia doloremque perferendis cumque pariatur! Voluptatum, repudiandae dicta? Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit atque provident perspiciatis eligendi illo! Explicabo laborum eum, iure consequuntur similique, facere ex mollitia doloremque perferendis cumque pariatur! Voluptatum, repudiandae dicta?
                                 </p>
 
                                 <div class="home__buttons">
@@ -212,6 +228,8 @@
             </div>
         </section>
 
+        
+        </div>
         <!--==================== VOTE ====================-->
         <section class="section vote">
             <div class="vote__container container grid">
@@ -308,6 +326,6 @@
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
-</body>
+
 
 </html>

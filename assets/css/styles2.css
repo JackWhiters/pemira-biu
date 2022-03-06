@@ -261,6 +261,7 @@
         top: 0;
         left: 0;
         z-index: -1;
+        height:90vh;
     }
     
     .wave svg {
@@ -275,6 +276,7 @@
     
     .i-home__container {
         position: relative;
+        max-height:340px;
     }
     
     .i-home__data {
@@ -1094,10 +1096,14 @@
         }
         .wave svg {
             visibility: visible;
-            height: 90vh;
+            height: 115vh;
         }
         .img__login {
             width: 320px;
+        }
+
+        .i__home {
+            margin-bottom: 15rem;
         }
     }
     

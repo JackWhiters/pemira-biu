@@ -12,6 +12,8 @@ if(isset($_POST['simpan'])) {
   $nim_wakil= mysqli_real_escape_string($koneksi, $_POST['nim_wakil']);
   $nm_paslon_wakil= mysqli_real_escape_string($koneksi, $_POST['nm_paslon_wakil']);
   $no_urut= mysqli_real_escape_string($koneksi, $_POST['no_urut']);
+  $visi= mysqli_real_escape_string($koneksi, $_POST['visi']);
+  $misi= mysqli_real_escape_string($koneksi, $_POST['misi']);
 
   if($_POST['simpan']){
     $ekstensi_diperbolehkan = array('png','jpg','JPG');
@@ -39,8 +41,8 @@ if(isset($_POST['simpan'])) {
     }
   }
   
-  mysqli_query($koneksi,"INSERT INTO data_paslon(id, nim_ketua, nm_paslon_ketua, gambar1, nim_wakil, nm_paslon_wakil, gambar2, no_urut)
-    VALUES ('','$nim_ketua','$nm_paslon_ketua','$gambar1','$nim_wakil','$nm_paslon_wakil','$gambar2','$no_urut')");
+  mysqli_query($koneksi,"INSERT INTO data_paslon(id, nim_ketua, nm_paslon_ketua, gambar1, nim_wakil, nm_paslon_wakil, gambar2, no_urut,visi,misi)
+    VALUES ('','$nim_ketua','$nm_paslon_ketua','$gambar1','$nim_wakil','$nm_paslon_wakil','$gambar2','$no_urut','$visi','$misi')");
   
   echo "<script>window.alert('Berhasil')
   window.location='input_data_paslon.php'</script>";
@@ -195,6 +197,10 @@ if(isset($_POST['simpan'])) {
         <div class="col-lg-6">
           <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group">
+            <div class="form-group">
+              <label>No paslon</label>
+              <input type="text" name="no_urut" required="required" class="form-control">
+            </div>
               <label>NIM Calon Ketua OSIM</label>
               <input type="text" name="nim_ketua" required="required" class="form-control">
             </div>
@@ -218,9 +224,14 @@ if(isset($_POST['simpan'])) {
               <label>foto wakil</label>
               <input type="file" name="gambar2" required="required" class="form-control-file">
             </div>
+
             <div class="form-group">
-              <label>No paslon</label>
-              <input type="text" name="no_urut" required="required" class="form-control">
+              <label>Visi</label>
+              <textarea class="form-control" name="visi" id="visi" rows="3"  required="required"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Misi</label>
+              <textarea class="form-control" name="misi" id="misi" rows="3"  required="required"></textarea>
             </div>
             <div class="form-group">
               <input type="submit" class="btn btn-success" name="simpan" value="Input" class="form-control">
