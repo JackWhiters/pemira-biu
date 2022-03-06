@@ -341,6 +341,7 @@ the website, in dark theme
 .i-home__container {
     position: relative;
     row-gap: 2rem;
+    padding-right: -2rem;
 }
 
 .i-home__data {
@@ -625,7 +626,6 @@ the website, in dark theme
 .login__container {
     position: relative;
     margin-top: 1vh;
-    width: auto;
     grid-gap: 2rem;
     padding: 60px 50px;
 }
@@ -971,6 +971,12 @@ form {
     .paslon__img-two {
         width: 220px;
     }
+    .login__container {
+        position: relative;
+        text-align: center;
+        justify-content: center;
+        margin-top: -15rem;
+    }
     .login-content {
         justify-content: center;
     }
@@ -981,7 +987,7 @@ form {
         visibility: hidden;
     }
     .img__login img {
-        width: 0;
+        visibility: hidden;
     }
     .home__social {
         right: -3rem;
@@ -1039,9 +1045,6 @@ form {
     body {
         margin: 0;
         overflow-x: hidden;
-    }
-    .section {
-        padding: 7rem 0 2rem;
     }
     .nav {
         height: calc(var(--header-height) + 1rem);
@@ -1115,6 +1118,7 @@ form {
     }
     .login__container {
         grid-template-columns: 1fr 2fr;
+        padding-top: 40vh;
     }
     .login-content {
         justify-content: center;
@@ -1123,10 +1127,10 @@ form {
         height: 70vh;
     }
     .img__login img {
+        visibility: visible;
         width: 400px;
     }
     .shape {
-        width: 100vh;
         visibility: visible;
     }
 }
@@ -1158,7 +1162,6 @@ form {
     }
     .shape {
         width: 100%;
-        margin-top:200px;
     }
     .home__img {
         height: 400px;
@@ -1205,6 +1208,9 @@ form {
     }
     .i__home {
         margin-bottom: 15rem;
+    }
+    .shape {
+        visibility: visible;
     }
 }
 

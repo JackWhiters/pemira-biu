@@ -1,6 +1,3 @@
-<?php
- include "koneksi.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,31 +125,40 @@
                 <h2 class="section__title swiper__title">Data Paslon</h2>
                 <div class="swiper-wrapper">
                     <!-- PASLON 1 -->
-                    <?php
-                                $data_paslon = mysqli_query($koneksi,"SELECT * FROM data_paslon ORDER BY no_urut ASC");
-                                while($d = mysqli_fetch_array($data_paslon)){
-                                ?>
                     <section class="swiper-slide">
                         <div class="home__content grid">
                             <div class="paslon__group">
+
                                 <div class="paslon__img-overlay">
-                                    <img src="<?php echo "sistem/foto/".$d['gambar1']; ?>" alt="" class="paslon__img-one">
+                                    <img src="assets/img/pp.jpg" alt="" class="paslon__img-one">
                                 </div>
 
                                 <div class="paslon__img-overlay">
-                                    <img src="<?php echo "sistem/foto/".$d['gambar2']; ?>" alt="" class="paslon__img-two">
+                                    <img src="assets/img/ppcewe.jpg" alt="" class="paslon__img-two">
                                 </div>
                             </div>
 
                             <div class="home__data">
-                                <h3 class="home__subtitle">PASLON <?php echo $d['no_urut']; ?></h3>
-                                <h1 class="home__title"><?php echo $d['nm_paslon_ketua']; ?> &<br> <?php echo $d['nm_paslon_wakil']; ?></h1>
-                                <p class="home__description">VISI<br><?php echo $d['visi']; ?></p>
+                                <h3 class="home__subtitle">PASLON 1</h3>
+                                <h1 class="home__title">nama &<br> nama</h1>
+                                <p class="home__description">penjelasan lorem ipsum</p>
 
                                 <div class="about__details">
                                     <p class="about__details-description">
                                         <i class="ri-checkbox-fill about__details-icon"></i>
-                                        <?php echo $d['nm_paslon_ketua']; ?>
+                                        We always deliver on time.
+                                    </p>
+                                    <p class="about__details-description">
+                                        <i class="ri-checkbox-fill about__details-icon"></i>
+                                        We give you guides to protect and care for your plants.
+                                    </p>
+                                    <p class="about__details-description">
+                                        <i class="ri-checkbox-fill about__details-icon"></i>
+                                        We always come over for a check-up after sale.
+                                    </p>
+                                    <p class="about__details-description">
+                                        <i class="ri-checkbox-fill about__details-icon"></i>
+                                        100% money back guaranteed.
                                     </p>
                                 </div>
 
@@ -162,9 +168,8 @@
                             </div>
                         </div>
                     </section>
-                    <?php } ?>
 
-                    <!-- PASLON 2
+                    <!-- PASLON 2 -->
                     <section class="swiper-slide">
                         <div class="home__content grid">
                             <div class="paslon__group">
@@ -209,7 +214,7 @@
                             </div>
                         </div>
                     </section>
-                </div> -->
+                </div>
                 <div class="swiper-pagination"></div>
             </div>
         </section>
