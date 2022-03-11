@@ -119,6 +119,9 @@ if(isset($_POST['login'])){
             
                 <!--=============== BOXICONS ===============-->
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+                
+    <!--=============== REMIX ICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
             
                 <!--=============== SWIPER CSS ===============-->
                 <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
@@ -140,31 +143,43 @@ if(isset($_POST['login'])){
             <a href="index.php" class="nav__logo">
                 <img src="assets/img/klogo2.png" alt="" class="nav__logo-img"> BEM BIU
             </a>
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="index.php#home" class="nav__link">Home</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="index.php#news" class="nav__link">Pemberitahuan</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="index.php#about" class="nav__link">Ketua</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="index.php#paslon" class="nav__link">Paslon</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="index.phpvote.php" class="nav__link active-link">Voting</a>
+                        </li>
+                    </ul>
 
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-
-                    <li class="nav__item">
-                        <a href="index.php" class="nav__link">Kembali</a>
-                    </li>
-
-                    <a href="vote2.php" class="button button--ghost">VOTING</a>
-                </ul>
-
-                <div class="nav__close" id="nav-close">
-                    <i class='bx bx-x'></i>
+                    <div class="nav__close" id="nav-close">
+                        <i class="ri-close-line"></i>
+                    </div>
                 </div>
-            </div>
 
-            <div class="nav__toggle" id="nav-toggle">
-                <i class='bx bx-grid-alt'></i>
-            </div>
+                <div class="nav__btns">
+                    <!-- Theme change button -->
+                    <i class="ri-moon-line change-theme" id="theme-button"></i>
+
+                    <div class="nav__toggle" id="nav-toggle">
+                        <i class="ri-menu-line"></i>
+                    </div>
+                </div>
 
         </nav>
     </header>
             
                 <!--===================== LOG-IN FORM =====================-->
-                <div class="wave"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M-115.75,-254.46 C79.88,352.34 252.58,-101.28 280.22,268.33 L176.51,161.59 L-8.01,232.76 Z" style="stroke: none; fill: #66ffcc;"></path></svg></div>
                 
                 <main class="main">
                     <section class="login section" id="login">
@@ -198,7 +213,7 @@ if(isset($_POST['login'])){
                                     
                                     <div class="input-div two">
                                         <div class="i">
-                                                <i class="fas fa-user"></i>
+                                            <i class="fas fa-lock"></i>
                                         </div>
                                         <div class="div">
                                             <h5>Captcha</h5>
@@ -218,7 +233,7 @@ if(isset($_POST['login'])){
                         </div>
                     </section>
                 </main>
-
+                 <!-- <div class="shape" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-115.75,-254.46 C79.88,352.34 252.58,-101.28 280.22,268.33 L176.51,161.59 L-8.01,232.76 Z" style="stroke: none; fill: #66ffcc;"></path></svg></div> -->
 
     <!--=============== SCROLL UP ===============-->
     <a href="#" class="scrollup" id="scroll-up">
