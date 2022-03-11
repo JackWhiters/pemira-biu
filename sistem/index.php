@@ -171,7 +171,7 @@ if(isset($_POST['simpan'])) {
            
 
             <!-- Surat Suara -->
-            <div class="container-fluid pt-4 px-4">
+    <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4" >
                     <div class="card-body py-3" style="background-color : #01c05d;">
                         <br>
@@ -179,14 +179,12 @@ if(isset($_POST['simpan'])) {
                         <h1 class="m-0 font-weight-bold text-center" style="color : white;">SURAT SUARA</h1>
                         <h1 class="m-0 font-weight-bold text-center" style="color : white;">PEMILIHAN RAYA</h1>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#01c05d" fill-opacity="1" d="M0,160L40,144C80,128,160,96,240,90.7C320,85,400,107,480,144C560,181,640,235,720,256C800,277,880,267,960,245.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
-                    <div class="card-body">
-                                
-                        <h3 class="m-0 font-weight-bold text-center">KETUA DAN WAKIL KETUA</h3>
-                        <h3 class="m-0 font-weight-bold text-center">BADAN EKSEKUTIF MAHASISWA</h3>
-                        <h3 class="m-0 font-weight-bold text-center">UNIVERSITAS BINA INSANI</h3>
-                        <h3 class="m-0 font-weight-bold text-center">TAHUN 2022</h3>
-                        <div class="text-center"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#01c05d" fill-opacity="1" d="M0,192L60,165.3C120,139,240,85,360,85.3C480,85,600,139,720,181.3C840,224,960,256,1080,240C1200,224,1320,160,1380,128L1440,96L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
+                    <div class="card-body">     
+                        <h2 class="m-0 font-weight-bold text-center">KETUA DAN WAKIL KETUA</h2>
+                        <h2 class="m-0 font-weight-bold text-center">BADAN EKSEKUTIF MAHASISWA</h2>
+                        <h2 class="m-0 font-weight-bold text-center">UNIVERSITAS BINA INSANI</h2>
+                        <h2 class="m-0 font-weight-bold text-center">TAHUN 2022</h2>
                         <br>
                         <br>
                         <br>
@@ -226,25 +224,33 @@ if(isset($_POST['simpan'])) {
                                 ?>
                                 <div class="col-sm-12 col-xl-6">
                                     <table class="table table-striped table-bordered table-hover">
+                                        <br>
+                                        <br>
                                         <tr>
-                                            <td colspan="2" style="background-color: #fffff; color: black; font-size: 50px; text-align: center;"><b><?php echo $d['no_urut']; ?></b>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img style="width: 100%;" src="<?php echo "foto/".$d['gambar1']; ?>"></td>
-                                            <td><img style="width: 100%;" src="<?php echo "foto/".$d['gambar2']; ?>"></td>
-                                        </tr>
-                                        <tr>
-                                            <td align="center"><h2><?php echo $d['nm_paslon_ketua']; ?></h2></td>
-                                            <td align="center"><h2><?php echo $d['nm_paslon_wakil']; ?></h2></td>
-                                        </tr>
-                                    <tr>
-                                            <td colspan="2" style="text-align: center;"><button type="button" class="userinfo btn btn-primary" data-id='<?php echo $d['id']; ?>' data-bs-toggle="modal" data-bs-target="#visimisiModal">
-Lihat Visi & Misi</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="text-align: center; padding: 20px; background-color: white;"><input type="radio" class="form-check-input" required="required" name="nomor_paslon" value="<?php echo $d['no_urut']; ?>"></td>
-                                        </tr>
+                                        <td>
+                                        <div class="row">
+                                            <div class="col text-center" colspan="2" style="background-color: #fffff; color: black; font-size: 50px; text-align: center;"><b><?php echo $d['no_urut']; ?></b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            
+                                            <div class="col-6 col-lg-6 text-center"><picture><img style="width: 20rem; height: 30rem;" class="img-fluid mx-auto rounded" src="<?php echo "foto/".$d['gambar1']; ?>"></picture></div>
+                                            <div class="col-6 col-lg-6 text-center"><picture><img style="width: 20rem; height: 30rem;" class="img-fluid mx-auto rounded" src="<?php echo "foto/".$d['gambar2']; ?>"></picture></div>
+                                        </div>
+                                        <div class="row">
+                                            
+                                            <div class="col-6 col-lg-6 text-center" align="center"><h3><?php echo $d['nm_paslon_ketua']; ?></h3><h6>Ketua BEM</h6></div>
+                                            <div class="col-6 col-lg-6 text-center" align="center"><h3><?php echo $d['nm_paslon_wakil']; ?></h3><h6>Wakil Ketua BEM</h6></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col text-center" colspan="2" style="text-align: center;"><button type="button" class="userinfo btn btn-primary" data-id='<?php echo $d['id']; ?>' data-bs-toggle="modal" data-bs-target="#visimisiModal">
+                                            Lihat Visi & Misi</button></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col text-center" colspan="2" style="text-align: center; padding: 20px; background-color: white;"><input type="radio" class="form-check-input" required="required" name="nomor_paslon" value="<?php echo $d['no_urut']; ?>"></div>
+                                        </div>
+                                        </td>
+                                    </tr>
                                     </table>
                                 </div>
                                 <?php } ?>
@@ -253,8 +259,10 @@ Lihat Visi & Misi</button></td>
                         </form> 
                     </div>
                 </div>
-            </div>
+            
             <!-- Surat Suara End -->
+
+
 
 
 
