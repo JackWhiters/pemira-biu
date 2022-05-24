@@ -49,7 +49,7 @@ if(isset($_POST['simpan'])) {
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link rel="icon" href="../vendors/images/klogo2.png" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -85,7 +85,7 @@ if(isset($_POST['simpan'])) {
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="index.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><img class="rounded-circle" src="logo.png" alt="" style="width: 40px; height: 40px;"></i> E-PEMIRA</h3>
                 </a>
 
@@ -242,7 +242,7 @@ if(isset($_POST['simpan'])) {
                                         </tr>
                                     <tr>
                                             <td colspan="2" style="text-align: center;"><button type="button" class="userinfo btn btn-primary" data-id='<?php echo $d['id']; ?>' data-bs-toggle="modal" data-bs-target="#visimisiModal">
-Lihat Visi & Misi</button></td>
+                                            Lihat Visi & Misi</button></td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="text-align: center; padding: 20px; background-color: white;"><input type="radio" class="form-check-input" required="required" name="nomor_paslon" value="<?php echo $d['no_urut']; ?>"></td>

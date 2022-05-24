@@ -61,8 +61,8 @@ $kode_akses= mysqli_real_escape_string($koneksi, $_POST['kode_akses']);
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'pwdformatif@gmail.com';                     //SMTP username
-    $mail->Password   = 'pwdformatif123';                               //SMTP password
+    $mail->Username   = 'bem.pemira@gmail.com';                     //SMTP username
+    $mail->Password   = 'bem12345';                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
     $mail->Port       = 465;//TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
@@ -80,12 +80,22 @@ $query2 = mysqli_query($koneksi, "SELECT kode_akses FROM tbl_akses WHERE nim='$n
 
   $kode_akses2 = mysqli_fetch_array($query2);
 
-  $mail->setFrom('pwdformatif@gmail.com', 'BEM BIU'); //Add a recipient
+  $mail->setFrom('bem.pemira@gmail.com', 'BEM BIU'); //Add a recipient
   $mail->addAddress($email['email']);
   
   $mail->isHTML(true);                                  //Set email format to HTML
   $mail->Subject = "BEM BIU (KODE AKSES - PEMIRA)";
-  $mail->Body    = 'NIM = '.$nim.'<br>ini Kode Verifikasi Kamu <b>'.$kode_akses2['kode_akses'].'</b>';
+  $mail->Body    = '<br><b>Hi BiU Friends</b></br>
+ 
+                  <br>Ini kode aktivasi email kamu ya!<br>
+                  <br>jangan sampai lupa apalagi tertinggal.<br>
+
+                  <br>Jangan sampai golput ya teman teman.<br>
+
+                  <br>NIM : <b>'.$nim.'</b></br>
+                  <br>Kode Aktifasi:<b>'.$kode_akses2['kode_akses'].'</b><br>
+
+                  <br>Terimakasih!<br>';
   if($mail->send()){
 	
     // echo  header("Location: buat_akses.php");

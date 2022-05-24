@@ -212,7 +212,18 @@ $no_urut= mysqli_real_escape_string($koneksi, $_POST['no_urut']);
                       <br>
                     </form>
 
-                    <h3>Data DPT Belum memilih</h3>  
+                    <h3>Data DPT Belum memilih</h3>
+                    <br>
+                    <div>
+                      	<form method="post" action="#">
+                            <input type="text" name="q" placeholder="Cari...">
+                            <select name="column">
+                              <option value="nim">NIM</option>
+                              <option value="nama_mhs">NAMA</option>
+                            </select>
+                            <input type="submit" name="submit" value="Find">
+                      </form>
+                    </div>
                       <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
                           <tr>
@@ -223,8 +234,81 @@ $no_urut= mysqli_real_escape_string($koneksi, $_POST['no_urut']);
                               <th>Opsi</th>
                           </tr>
                             <?php
-                              $data_dpt = mysqli_query($koneksi,"SELECT * FROM tbl_dpt WHERE status='Belum memilih'");
-                              while($d = mysqli_fetch_array($data_dpt)){
+                              	if (isset($_POST['submit'])) {
+
+                                              $q = $koneksi->real_escape_string($_POST['q']);
+                                              $column = $koneksi->real_escape_string($_POST['column']);
+
+                                              if ($column == "nim") {
+                                                  $column = "nim";
+                                              $sql = $koneksi->query("SELECT * FROM tbl_dpt WHERE $column LIKE '%$q%'");
+                                              if (!empty($sql) && $sql->num_rows > 0) {
+                                                while ($data = $sql->fetch_array()) {
+                                                         ?>
+                                                  <tr>
+                                                    <td><?php echo $data['nim']; ?></td>
+                                                    <td style="text-transform: capitalize;"><?php echo $data['nama_mhs']; ?></td>
+                                                    <td><mark style="background-color: yellow;"><b><?php echo $data['status']; ?></b></mark></td>
+                                                    <td><?php echo $data['email']; ?></td>
+                                                    <td><a class="btn btn-danger btn-circle" onclick="return confirm('Yakin hapus data ini !!!')" href="hapus_dpt.php?nim=<?php echo $data['nim']; ?>">Hapus</a>
+                                                  </td>
+                                                  </tr>
+                                                <?php
+                                                }
+                                              } else
+                                                echo "<center>Data Nim Tidak Ada!</center>";
+                                                  }
+                                              else if ($column == "nama_mhs") {
+                                                       $column = "nama_mhs";
+                                                      $sql = $koneksi->query("SELECT * FROM tbl_dpt WHERE $column LIKE '%$q%'");
+                                                      if (!empty($sql) && $sql->num_rows > 0) {
+                                                while ($data = $sql->fetch_array()) {
+                                                         ?>
+                                                  <tr>
+                                                    <td><?php echo $data['nim']; ?></td>
+                                                    <td style="text-transform: capitalize;"><?php echo $data['nama_mhs']; ?></td>
+                                                    <td><mark style="background-color: yellow;"><b><?php echo $data['status']; ?></b></mark></td>
+                                                    <td><?php echo $data['email']; ?></td>
+                                                    <td><a class="btn btn-danger btn-circle" onclick="return confirm('Yakin hapus data ini !!!')" href="hapus_dpt.php?nim=<?php echo $data['nim']; ?>">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                }
+                                              } else
+                                                echo "<center>Data Nama Tidak Ada!</center>";
+                                              }
+                                            else if($column == '' || $column == '') {
+                                                    $data_dpt = mysqli_query($koneksi,"SELECT * FROM tbl_dpt WHERE status='Belum memilih'");
+                                                    while($d = mysqli_fetch_array($data_dpt)){
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $d['nim']; ?></td>
+                                                        <td style="text-transform: capitalize;"><?php echo $d['nama_mhs']; ?></td>
+                                                        <td><mark style="background-color: yellow;"><b><?php echo $d['status']; ?></b></mark></td>
+                                                        <td><?php echo $d['email']; ?></td>
+                                                        <td><a class="btn btn-danger btn-circle" onclick="return confirm('Yakin hapus data ini !!!')" href="hapus_dpt.php?nim=<?php echo $d['nim']; ?>">Hapus</a>
+                                                        </td>
+                                                    </tr>
+                                                      <?php } 
+                                            }
+                                            else if($column == '') {
+                                                    $data_dpt = mysqli_query($koneksi,"SELECT * FROM tbl_dpt WHERE status='Belum memilih'");
+                                                    while($d = mysqli_fetch_array($data_dpt)){
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $d['nim']; ?></td>
+                                                        <td style="text-transform: capitalize;"><?php echo $d['nama_mhs']; ?></td>
+                                                        <td><mark style="background-color: yellow;"><b><?php echo $d['status']; ?></b></mark></td>
+                                                        <td><?php echo $d['email']; ?></td>
+                                                        <td><a class="btn btn-danger btn-circle" onclick="return confirm('Yakin hapus data ini !!!')" href="hapus_dpt.php?nim=<?php echo $d['nim']; ?>">Hapus</a>
+                                                        </td>
+                                                    </tr>
+                                                      <?php } 
+                                            }
+                                  }
+                                  else {
+                                      $data_dpt = mysqli_query($koneksi,"SELECT * FROM tbl_dpt WHERE status='Belum memilih'");
+                                      while($d = mysqli_fetch_array($data_dpt)){
                             ?>
                           <tr>
                               <td><?php echo $d['nim']; ?></td>
@@ -234,7 +318,10 @@ $no_urut= mysqli_real_escape_string($koneksi, $_POST['no_urut']);
                               <td><a class="btn btn-danger btn-circle" onclick="return confirm('Yakin hapus data ini !!!')" href="hapus_dpt.php?nim=<?php echo $d['nim']; ?>">Hapus</a>
                               </td>
                           </tr>
-                            <?php } ?>
+                            <?php } 
+                                  }
+                                  ?>
+                             
                         </table>
                       </div>
                   </div>

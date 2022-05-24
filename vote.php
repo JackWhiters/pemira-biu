@@ -16,7 +16,6 @@ include 'logic.php';
     <meta name="description" content="Your description" />
     <meta name="author" content="Your name" />
 
-    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
     <meta property="og:site_name" content="" />
     <!-- website name -->
     <meta property="og:site" content="" />
@@ -78,9 +77,6 @@ include 'logic.php';
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top navbar-light">
       <div class="container">
-        <!-- Text Logo - Use this if you don't have a graphic logo -->
-        <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Gemdev</a> -->
-
         <!-- Image Logo -->
         <a class="navbar-brand logo-image" href="index.php"
           ><img src="vendors/images/klogo2.png" alt="" class="i-home__img">
@@ -105,17 +101,16 @@ include 'logic.php';
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="#ketua"> Ketua </a>
+              <a class="nav-link page-scroll" href="index.php#ketua"> Ketua </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link page-scroll" href="#paslon"> Paslon </a>
+              <a class="nav-link page-scroll" href="index.php#paslon"> Paslon </a>
             </li>
             <li class="nav-item">
               <a class="nav-link page-scroll" href="vote.php"> Voting </a>
             </li>
           </ul>
          
-        <!-- <img src="assets/img/klogo2.png" alt="" class="i-home__img"> -->
 </div>
 </section>
             </span>
@@ -125,11 +120,6 @@ include 'logic.php';
       </div>
       <!-- end of container -->
     </nav>
-
-
-    <!-- end of header -->
-    <!-- end of basic-1 -->
-    <!-- end of statement -->
 
 <!--    -->
  <section class="ftco-section">
@@ -143,7 +133,7 @@ include 'logic.php';
             <div class="wrap">
               <div
                 class="img"
-                style="background-image: url(vendors/images/klogo2.png)"
+                style="background-image: url(vendors/images/blue.png)"
               ></div>
               <div class="login-wrap p-4 p-md-5" >
                 <div class="d-flex">
@@ -218,10 +208,8 @@ include 'logic.php';
       </div>
     </section>
 
-    <!-- =============== SCROLL UP ===============
-    <a href="#" class="scrollup" id="scroll-up">
-        <i class='bx bx-up-arrow-alt scrollup__icon'></i>
-    </a> -->
+
+    </a>
     <script src="vendor/tilt/tilt.jquery.min.js"></script>
     <script >
         $('.js-tilt').tilt({
@@ -242,7 +230,7 @@ include 'logic.php';
     <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script>
 
-        <!-- Scripts -->
+    <!-- Scripts -->
     <script src="vendors/js/jquery.min.js"></script>
     <!-- jQuery for Bootstrap's JavaScript plugins -->
     <script src="vendors/js/bootstrap.min.js"></script>
@@ -253,14 +241,12 @@ include 'logic.php';
     <!-- Swiper for image and text sliders -->
     <script src="vendors/js/jquery.magnific-popup.js"></script>
     <!-- Magnific Popup for lightboxes -->
-    <!-- <script src="vendors/js/scripts.js"></script> -->
+    <script src="vendors/js/scripts2.js"></script>
     
     <!--=============== SWIPER JS ===============-->
     <script src="vendors/js/swiper-bundle.min.js"></script>
     <!--=============== MAIN JS ===============-->
     <script src="vendors/js/main.js"></script>
     <!-- Custom scripts -->
-    
-</body>
 
 </html>

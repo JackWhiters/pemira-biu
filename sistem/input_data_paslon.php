@@ -201,11 +201,11 @@ if(isset($_POST['simpan'])) {
               <label>No paslon</label>
               <input type="text" name="no_urut" required="required" class="form-control">
             </div>
-              <label>NIM Calon Ketua OSIM</label>
+              <label>NIM Calon Ketua</label>
               <input type="text" name="nim_ketua" required="required" class="form-control">
             </div>
             <div class="form-group">
-              <label>Nama Calon Ketua OSIM</label>
+              <label>Nama Calon Ketua</label>
               <input type="text" name="nm_paslon_ketua" required="required" autocomplete="off" class="form-control">
             </div>
             <div class="form-group">
