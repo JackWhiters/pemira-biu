@@ -247,6 +247,7 @@ include 'logic.php';
     <script src="vendors/js/swiper-bundle.min.js"></script>
     <!--=============== MAIN JS ===============-->
     <script src="vendors/js/main.js"></script>
+    <script src="login/js/main.js"></script>
     <!-- Custom scripts -->
 
 </html>

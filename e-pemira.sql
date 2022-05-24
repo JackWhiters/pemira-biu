@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2022 at 01:17 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.11
+-- Generation Time: May 24, 2022 at 02:00 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -116,6 +116,7 @@ CREATE TABLE `tbl_dpt` (
 --
 
 INSERT INTO `tbl_dpt` (`nim`, `nama_mhs`, `status`, `waktu`, `email`) VALUES
+('2018310002', 'ADHITYA RANGGA PUTRA', 'Belum memilih', 'Belum memilih', 'Adhityaranggap@gmail.com'),
 ('2018310003', 'DIAN RAMADHAN', 'Belum memilih', 'Belum memilih', 'dianr790@gmail.com'),
 ('2018310005', 'FITRIANTI', 'Belum memilih', 'Belum memilih', 'fitrianti1218@gmail.com'),
 ('2018310006', 'FARHAN FADHLURROHMAN', 'Belum memilih', 'Belum memilih', 'farhanf1886@gmail.com'),
@@ -501,6 +502,7 @@ INSERT INTO `tbl_dpt` (`nim`, `nama_mhs`, `status`, `waktu`, `email`) VALUES
 ('2020130017', 'Mohamad Ferrari Fariel Muhajiroh', 'Belum memilih', 'Belum memilih', 'iye.chan354@gmail.com'),
 ('2020130018', 'ASTRID OKTAVIANA', 'Belum memilih', 'Belum memilih', 'astridoctaviana1@gmail.com'),
 ('2020130019', 'Suhailah', 'Belum memilih', 'Belum memilih', 'suhailaella829@gmail.com'),
+('2020130020', 'Oriza Zatifa Putri Sadi', 'Belum memilih', 'Belum memilih', 'orizatifa3@gmail.com'),
 ('2020130021', 'Esah Maesaroh', 'Belum memilih', 'Belum memilih', 'eshmsrh@gmail.com'),
 ('2020130023', 'Dewi Yuliati', 'Belum memilih', 'Belum memilih', 'dewiyulia8811@gmail.com'),
 ('2020130024', 'Yeniwati', 'Belum memilih', 'Belum memilih', 'yeniwatidurenjaya@gmail.com'),
@@ -555,6 +557,7 @@ INSERT INTO `tbl_dpt` (`nim`, `nama_mhs`, `status`, `waktu`, `email`) VALUES
 ('2020210042', 'NURFIYATUN KHASANAH', 'Belum memilih', 'Belum memilih', 'khasanah.nurfi@gmail.com'),
 ('2020210043', 'BARIANA AYU MUNAWAROH', 'Belum memilih', 'Belum memilih', 'barianaayu17@gmail.com'),
 ('2020210044', 'BETAHRIA ADITYA', 'Belum memilih', 'Belum memilih', 'fransiscabetha2@gmail.com'),
+('2020220001', 'Nelly Nur Fitriani', 'Belum memilih', 'Belum memilih', 'nurfitrianinelly2@gmail.com'),
 ('2020220002', 'Syifa Aulia Putri', 'Belum memilih', 'Belum memilih', 'syifaauliap24@gmail.com'),
 ('2020220003', 'Rifda Alfiyah', 'Belum memilih', 'Belum memilih', 'alfiyahrifda1020@gmail.com'),
 ('2020220004', 'Nelly Nur Fitriani', 'Belum memilih', 'Belum memilih', 'nurfitrianinelly2@gmail.com'),
@@ -627,11 +630,11 @@ INSERT INTO `tbl_dpt` (`nim`, `nama_mhs`, `status`, `waktu`, `email`) VALUES
 ('2020310076', 'Akmal Ilham Ramadhan', 'Belum memilih', 'Belum memilih', 'akmal251101ramadhan@gmail.com'),
 ('2020310077', 'Fatih Alsena', 'Belum memilih', 'Belum memilih', 'fatihalsena@gmail.com'),
 ('2020310078', 'Charles Wesley Tambunan', 'Belum memilih', 'Belum memilih', 'tambunancharles3@gmail.com'),
-('2020310079', 'Fihir Alhamid', 'Belum memilih', 'Belum memilih', 'iingalhamid90@gmail.com'),
+('2020310079', 'Fihir Alhamid', 'Belum memilih', 'Belum memilih', 'iingalhamid90@gmail.com');
+INSERT INTO `tbl_dpt` (`nim`, `nama_mhs`, `status`, `waktu`, `email`) VALUES
 ('2020310080', 'Tiar permana', 'Belum memilih', 'Belum memilih', 'tiarpermana05@gmail.com'),
 ('2020310081', 'Solahuddin ali', 'Belum memilih', 'Belum memilih', 'solahuddinali310302@gmail.com'),
-('2020310082', 'Rhaka Guna Hidayat', 'Belum memilih', 'Belum memilih', 'rhakagunahidayat@gmail.com');
-INSERT INTO `tbl_dpt` (`nim`, `nama_mhs`, `status`, `waktu`, `email`) VALUES
+('2020310082', 'Rhaka Guna Hidayat', 'Belum memilih', 'Belum memilih', 'rhakagunahidayat@gmail.com'),
 ('2020310083', 'Siti Nariyah', 'Belum memilih', 'Belum memilih', 'citinayah00@gmail.com'),
 ('2020310084', 'Jundi Al Hafidz', 'Belum memilih', 'Belum memilih', 'jundialhafidz@gmail.com'),
 ('2020310085', 'Muhammad sonhajji', 'Belum memilih', 'Belum memilih', 'sonhajji317@gmail.com'),
@@ -1089,7 +1092,7 @@ CREATE TABLE `user_token` (
 --
 
 INSERT INTO `user_token` (`id`, `nim`, `token`, `timemodified`) VALUES
-(4, 'BEMBIU22', 'pY1HexWyQy', '2022-05-23 23:11:52'),
+(4, 'BEMBIU22', 'QAnjhzQEAA', '2022-05-23 23:37:05'),
 (5, '2019320021', 'eLkARHIY4G', '2022-05-22 18:24:55'),
 (6, 'BEMBIU23', 'eqAzDF39yC', '2022-05-23 02:42:58');
 

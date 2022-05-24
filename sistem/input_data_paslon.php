@@ -227,11 +227,11 @@ if(isset($_POST['simpan'])) {
 
             <div class="form-group">
               <label>Visi</label>
-              <textarea class="form-control" name="visi" id="visi" rows="3"  required="required"></textarea>
+              <textarea class="form-control" name="visi" id="visi" rows="4"  required="required"></textarea>
             </div>
             <div class="form-group">
               <label>Misi</label>
-              <textarea class="form-control" name="misi" id="misi" rows="3"  required="required"></textarea>
+              <textarea class="form-control" name="misi" id="misi" rows="4"  required="required"></textarea>
             </div>
             <div class="form-group">
               <input type="submit" class="btn btn-success" name="simpan" value="Input" class="form-control">
