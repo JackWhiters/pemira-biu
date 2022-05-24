@@ -1,7 +1,8 @@
 <?php
 session_start();
 include '../koneksi.php';
-include "check_token.php";  // Check user token
+include "check_token.php";
+ // Check user token
 if ( !isset($_SESSION["login"]) ) {
   header("location:../index.php");
   exit;
@@ -11,6 +12,7 @@ if ( !isset($_SESSION["login"]) ) {
 if(!isset($_SESSION['nim'])){
     header("location:../index.php");
  }
+ 
  
 
 

@@ -1,245 +1,227 @@
 <?php
 session_start();
 include 'koneksi.php';
-
-$msg="";
-if(isset($_POST['login'])){
-    $ip_address=getUserIpAddr();  
-    $time=time()-30; //30 detik  
-    $check_attmp=mysqli_fetch_assoc(mysqli_query($koneksi,"select count(*) as total_count from attempt_count where time_count>$time and ip_address='$ip_address'"));  
-        //print_r($check_attmp);
-    $total_count=$check_attmp['total_count']; 
-    $captcha=$_POST['captcha'];
-     
-    if($total_count==3) {  
-        $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
-    }elseif($_SESSION['CODE']==$captcha) { 
-             
-            $kode_aksess = mysqli_real_escape_string($koneksi, $_POST['kode_akses']);
-            $nimk = mysqli_real_escape_string($koneksi, $_POST['nim']);
-            $data_akses = mysqli_query($koneksi, "SELECT * FROM tbl_akses INNER JOIN tbl_dpt ON tbl_akses.nim = tbl_dpt.nim WHERE kode_akses='$kode_aksess' AND tbl_akses.nim ='$nimk'");
-            $r = mysqli_fetch_array($data_akses);
-            $nim = isset($r['nim']);
-            $kode_akses = isset($r['kode_akses']);
-            $nama_mhs = isset($r['nama_mhs']);
-            $level = isset($r['level']);
-        if($total_count==3) {  
-                $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
-            } else if( mysqli_num_rows($data_akses) == 1 ) {
-                $level = $r['level'];
-                $nama_mhs = $r['nama_mhs'];
-                $_SESSION["login"] = true;
-                $_SESSION['nim'] = $nim;
-                $_SESSION['nama_mhs'] = $nama_mhs;
-                $_SESSION['kode_akses'] = $kode_akses;
-                $_SESSION['level'] = $level;
-
-                    $sql_query = "select count(*) as cntUser from tbl_akses where nim='".$nimk."' and kode_akses='".$kode_aksess."'";
-                    $result = mysqli_query($koneksi,$sql_query);
-                    $row = mysqli_fetch_array($result);
-                    $count = $row['cntUser'];
-
-                    if($count > 0){
-                        $token = getToken(10);
-                        $_SESSION['nim'] = $nimk;
-                        $_SESSION['token'] = $token;
-                    
-                        // Update user token 
-                        $result_token = mysqli_query($koneksi, "select count(*) as allcount from user_token where nim='".$nimk."' ");
-                        $row_token = mysqli_fetch_assoc($result_token);
-                        if($row_token['allcount'] > 0){
-                           mysqli_query($koneksi,"update user_token set token='".$token."' where nim='".$nimk."'");
-                        }else{
-                           mysqli_query($koneksi,"insert into user_token(nim,token) values('".$nimk."','".$token."')");
-                        }
-                        header("location:sistem/index.php");  
-                      }
-            mysqli_query($koneksi,"delete from attempt_count where ip_address='$ip_address'");  
-                      
-            } else {  
-                $total_count++;   
-                $time_remain=3-$total_count;  
-                $time=time();  
-                if ($time_remain==0) {  
-                  $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
-                } else {  
-                  $msg="NIM Atau Kode Akses Salah ".$time_remain. " Tersisa";  
-                } 
-                mysqli_query($koneksi,"INSERT INTO `attempt_count`(`ip_address`, `time_count`) VALUES ('$ip_address','$time')");  
-            }  
-        } else {
-            $total_count++;   
-            $time_remain=3-$total_count;  
-            $time=time();  
-            if ($time_remain==0) {  
-              $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
-            } else {  
-              $msg="KODE CAPTCHA SALAH ".$time_remain. " Tersisa";  
-            } 
-            mysqli_query($koneksi,"INSERT INTO `attempt_count`(`ip_address`, `time_count`) VALUES ('$ip_address','$time')");  
-   
-        }
-}
-        //fungsi untuk mendapat IP Client
-    function getUserIpAddr(){  
-        if(!empty($_SERVER['HTTP_CLIENT_IP'])){  
-        $ip = $_SERVER['HTTP_CLIENT_IP'];  
-        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){  
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
-        }else{  
-        $ip = $_SERVER['REMOTE_ADDR'];  
-        }  
-        return $ip;  
-    }
-    
-        // membuat token
-    function getToken($length){
-        $token = "";
-        $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
-        $codeAlphabet.= "0123456789";
-        $max = strlen($codeAlphabet);
-    
-        for ($i=0; $i < $length; $i++) {
-        $token .= $codeAlphabet[random_int(0, $max-1)];
-        }
-  
-    return $token;
-  }
+include 'logic.php';
 ?>
-            <!DOCTYPE html>
-            <html lang="en">
-            
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            
-                <!--=============== FAVICON ===============-->
-                <link rel="shortcut icon" href="assets/img/klogo2.png" type="image/x-icon">
-            
-                <!--=============== BOXICONS ===============-->
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-                
-    <!--=============== REMIX ICONS ===============-->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-            
-                <!--=============== SWIPER CSS ===============-->
-                <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-            
-                <!--=============== CSS ===============-->
-                <link rel="stylesheet" href="assets/css/styles2.css">
-                
-                <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-                <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-            
-                <title>BEM BIU</title>
-            </head>
-            
-            <body>
-    <!--==================== HEADER ====================-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Your description" />
+    <meta name="author" content="Your name" />
+
+    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
+    <meta property="og:site_name" content="" />
+    <!-- website name -->
+    <meta property="og:site" content="" />
+    <!-- website link -->
+    <meta property="og:title" content="" />
+    <!-- title shown in the actual shared post -->
+    <meta property="og:description" content="" />
+    <!-- description shown in the actual shared post -->
+    <meta property="og:image" content="" />
+    <!-- image link, make sure it's jpg -->
+    <meta property="og:url" content="" />
+    <!-- where do you want your post to link to -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webpage Title -->
+    <title> PEMIRA BEM BIU </title>
+
+    <!-- Styles -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="vendors/css/bootstrap.css" rel="stylesheet" />
+    <link href="vendors/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="vendors/css/swiper.css" rel="stylesheet" />
+    <link href="vendors/css/magnific-popup.css" rel="stylesheet" />
+    <link href="vendors/css/styleslogin.css" rel="stylesheet" />
     
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="index.php" class="nav__logo">
-                <img src="assets/img/klogo2.png" alt="" class="nav__logo-img"> BEM BIU
-            </a>
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="#home" class="nav__link active-link">Home</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#news" class="nav__link">Pemberitahuan</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#about" class="nav__link">Ketua</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#paslon" class="nav__link">Paslon</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="vote.php" class="nav__link">Voting</a>
-                        </li>
-                    </ul>
 
-                    <div class="nav__close" id="nav-close">
-                        <i class="ri-close-line"></i>
-                    </div>
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" href="login/css/style.css" />
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="vendors/css/swiper-bundle.min.css">
+
+    <!-- Favicon  -->
+    <link rel="icon" href="vendors/images/klogo2.png" />
+  </head>
+  <body data-spy="scroll" data-target=".fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light">
+      <div class="container">
+        <!-- Text Logo - Use this if you don't have a graphic logo -->
+        <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Gemdev</a> -->
+
+        <!-- Image Logo -->
+        <a class="navbar-brand logo-image" href="index.php"
+          ><img src="vendors/images/klogo2.png" alt="" class="i-home__img">
+        </a>
+
+        <button
+          class="navbar-toggler p-0 border-0"
+          type="button"
+          data-toggle="offcanvas"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="navbar-collapse offcanvas-collapse"
+          id="navbarsExampleDefault"
+        >
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="index.php"
+                > Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="#ketua"> Ketua </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="#paslon"> Paslon </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="vote.php"> Voting </a>
+            </li>
+          </ul>
+         
+        <!-- <img src="assets/img/klogo2.png" alt="" class="i-home__img"> -->
+</div>
+</section>
+            </span>
+          </span>
+        </div>
+        <!-- end of navbar-collapse -->
+      </div>
+      <!-- end of container -->
+    </nav>
+
+
+    <!-- end of header -->
+    <!-- end of basic-1 -->
+    <!-- end of statement -->
+
+<!--    -->
+ <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 text-center mb-5">
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-7 col-lg-5">
+            <div class="wrap">
+              <div
+                class="img"
+                style="background-image: url(vendors/images/klogo2.png)"
+              ></div>
+              <div class="login-wrap p-4 p-md-5" >
+                <div class="d-flex">
+                  <div class="w-100">
+                    <h3 class="mb-4">Login</h3>
+                  </div>
                 </div>
+                <form action="#" method="post" class="signin-form">
+                  <div class="form-group mt-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="nim"
+                      id="nim"
+                      autocomplete="off"
+                      required
+                    />
+                    <label class="form-control-placeholder" for="username"
+                      >NIM</label
+                    >
+                  </div>
+                  <div class="form-group">
+                    <input
+                      id="password-field"
+                      type="password"
+                      class="form-control"
+                      name="kode_akses"
+                      autocomplete="off"
+                      required
+                      required
+                    />
+                    <label class="form-control-placeholder" for="password"
+                      >Kode Akses</label
+                    >
+                    <span
+                      toggle="#password-field"
+                      class="fa fa-fw fa-eye field-icon toggle-password"
+                    ></span>
+                  </div>
 
-                <div class="nav__btns">
-                    <!-- Theme change button -->
-                    <i class="ri-moon-line change-theme" id="theme-button"></i>
-
-                    <div class="nav__toggle" id="nav-toggle">
-                        <i class="ri-menu-line"></i>
+                  <div class="form-group d-flex">
+                    <div class="text-left">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="captcha"
+                        id="captcha"
+                        autocomplete="off"
+                        required
+                      />
                     </div>
-                </div>
+                    <div class="text-right">
+                      <img class="captcha" src="captcha.php" />
+                    </div>
+                  </div>
+                  <div class="div"><?php echo $msg ?></div>
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="form-control btn btn-primary rounded submit px-3"
+                      name="login" id="login"
+                      style="color:#093d77"
+                    >
+                      Vote
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        </nav>
-    </header>
-            
-                <!--===================== LOG-IN FORM =====================-->
-        <div class="shape" style="height: 80vh; overflow: hidden; position: absolute;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-115.75,-254.46 C79.88,352.34 252.58,-101.28 280.22,268.33 L176.51,161.59 L-8.01,232.76 Z" style="stroke: none; fill: #66ffcc;"></path></svg></div>
-                
-                <main class="main">
-                    <section class="login section" id="login">
-                        <div class="login__container container grid">
-                            <div class="img__login">
-                                <img src="assets/img/klogo2.png">
-                            </div>
-                            <div class="login-content">
-                                <form data-toggle="validator" action="" method="post" id="frmCaptcha">
-                                    <img src="assets/img/avatar.svg">
-                                    <h2 class="login__title">Welcome</h2>
-                                    <div class="input-div one">
-                                        <div class="i">
-                                                <i class="fas fa-user"></i>
-                                        </div>
-                                        <div class="div">
-                                            <h5>NIM</h5>
-                                            <input type="text" class="input" name="nim" id="nim" autocomplete="off" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="input-div pass">
-                                        <div class="i"> 
-                                            <i class="fas fa-lock"></i>
-                                        </div>
-                                        <div class="div">
-                                            <h5>Kode Akses</h5>
-                                            <input type="password" class="input" name="kode_akses" id="kode_akses" autocomplete="off" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="input-div two">
-                                        <div class="i">
-                                            <i class="fas fa-lock"></i>
-                                        </div>
-                                        <div class="div">
-                                            <h5>Captcha</h5>
-                                        <img class="captcha" src="captcha.php">
-
-                                            <input type="text" class="input" name="captcha" id="captcha" autocomplete="off" required>
-                                        </div>
-                                    </div>
-                                    <div class="div"><?php echo $msg ?></div>
-                                    <ul class="link__bottom">
-                                        <li>
-                                        <button type="submit" class="button" name="login" id="login">Login</button> 
-                                        </li>
-                                    </ul>
-                                </form>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-
-
-    <!--=============== SCROLL UP ===============-->
+    <!-- =============== SCROLL UP ===============
     <a href="#" class="scrollup" id="scroll-up">
         <i class='bx bx-up-arrow-alt scrollup__icon'></i>
-    </a>
+    </a> -->
     <script src="vendor/tilt/tilt.jquery.min.js"></script>
     <script >
         $('.js-tilt').tilt({
@@ -259,6 +241,25 @@ if(isset($_POST['login'])){
     <script src="js/validator.min.js"></script>
     <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script>
+
+        <!-- Scripts -->
+    <script src="vendors/js/jquery.min.js"></script>
+    <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="vendors/js/bootstrap.min.js"></script>
+    <!-- Bootstrap framework -->
+    <script src="vendors/js/jquery.easing.min.js"></script>
+    <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script src="vendors/js/swiper.min.js"></script>
+    <!-- Swiper for image and text sliders -->
+    <script src="vendors/js/jquery.magnific-popup.js"></script>
+    <!-- Magnific Popup for lightboxes -->
+    <!-- <script src="vendors/js/scripts.js"></script> -->
+    
+    <!--=============== SWIPER JS ===============-->
+    <script src="vendors/js/swiper-bundle.min.js"></script>
+    <!--=============== MAIN JS ===============-->
+    <script src="vendors/js/main.js"></script>
+    <!-- Custom scripts -->
     
 </body>
 

@@ -1,322 +1,601 @@
+<?php
+
+$msg="";
+if(isset($_POST['login'])){
+    $ip_address=getUserIpAddr();  
+    $time=time()-30; //30 detik  
+    $check_attmp=mysqli_fetch_assoc(mysqli_query($koneksi,"select count(*) as total_count from attempt_count where time_count>$time and ip_address='$ip_address'"));  
+        //print_r($check_attmp);
+    $total_count=$check_attmp['total_count']; 
+    $captcha=$_POST['captcha'];
+     
+    if($total_count==3) {  
+        $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
+    }elseif($_SESSION['CODE']==$captcha) { 
+             
+            $kode_aksess = mysqli_real_escape_string($koneksi, $_POST['kode_akses']);
+            $nimk = mysqli_real_escape_string($koneksi, $_POST['nim']);
+            $data_akses = mysqli_query($koneksi, "SELECT * FROM tbl_akses INNER JOIN tbl_dpt ON tbl_akses.nim = tbl_dpt.nim WHERE kode_akses='$kode_aksess' AND tbl_akses.nim ='$nimk'");
+            $r = mysqli_fetch_array($data_akses);
+            $nim = isset($r['nim']);
+            $kode_akses = isset($r['kode_akses']);
+            $nama_mhs = isset($r['nama_mhs']);
+            $level = isset($r['level']);
+        if($total_count==3) {  
+                $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
+            } else if( mysqli_num_rows($data_akses) == 1 ) {
+                $level = $r['level'];
+                $nama_mhs = $r['nama_mhs'];
+                $_SESSION["login"] = true;
+                $_SESSION['nim'] = $nim;
+                $_SESSION['nama_mhs'] = $nama_mhs;
+                $_SESSION['kode_akses'] = $kode_akses;
+                $_SESSION['level'] = $level;
+
+                    $sql_query = "select count(*) as cntUser from tbl_akses where nim='".$nimk."' and kode_akses='".$kode_aksess."'";
+                    $result = mysqli_query($koneksi,$sql_query);
+                    $row = mysqli_fetch_array($result);
+                    $count = $row['cntUser'];
+
+                    if($count > 0){
+                        $token = getToken(10);
+                        $_SESSION['nim'] = $nimk;
+                        $_SESSION['token'] = $token;
+                    
+                        // Update user token 
+                        $result_token = mysqli_query($koneksi, "select count(*) as allcount from user_token where nim='".$nimk."' ");
+                        $row_token = mysqli_fetch_assoc($result_token);
+                        if($row_token['allcount'] > 0){
+                           mysqli_query($koneksi,"update user_token set token='".$token."' where nim='".$nimk."'");
+                        }else{
+                           mysqli_query($koneksi,"insert into user_token(nim,token) values('".$nimk."','".$token."')");
+                        }
+                        header("location:sistem/index.php");  
+                      }
+            mysqli_query($koneksi,"delete from attempt_count where ip_address='$ip_address'");  
+                      
+            } else {  
+                $total_count++;   
+                $time_remain=3-$total_count;  
+                $time=time();  
+                if ($time_remain==0) {  
+                  $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
+                } else {  
+                  $msg="NIM Atau Kode Akses Salah ".$time_remain. " Tersisa";  
+                } 
+                mysqli_query($koneksi,"INSERT INTO `attempt_count`(`ip_address`, `time_count`) VALUES ('$ip_address','$time')");  
+            }  
+        } else {
+            $total_count++;   
+            $time_remain=3-$total_count;  
+            $time=time();  
+            if ($time_remain==0) {  
+              $msg="Anda Mencoba Terlalu Banyak Tunggu 30 Detik";  
+            } else {  
+              $msg="KODE CAPTCHA SALAH ".$time_remain. " Tersisa";  
+            } 
+            mysqli_query($koneksi,"INSERT INTO `attempt_count`(`ip_address`, `time_count`) VALUES ('$ip_address','$time')");  
+   
+        }
+}
+        //fungsi untuk mendapat IP Client
+    function getUserIpAddr(){  
+        if(!empty($_SERVER['HTTP_CLIENT_IP'])){  
+        $ip = $_SERVER['HTTP_CLIENT_IP'];  
+        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){  
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+        }else{  
+        $ip = $_SERVER['REMOTE_ADDR'];  
+        }  
+        return $ip;  
+    }
+    
+        // membuat token
+    function getToken($length){
+        $token = "";
+        $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+        $codeAlphabet.= "0123456789";
+        $max = strlen($codeAlphabet);
+    
+        for ($i=0; $i < $length; $i++) {
+        $token .= $codeAlphabet[random_int(0, $max-1)];
+        }
+  
+    return $token;
+  }
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Your description" />
+    <meta name="author" content="Your name" />
 
-    <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="assets/img/klogo2.png" type="image/x-icon">
+    <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->
+    <meta property="og:site_name" content="" />
+    <!-- website name -->
+    <meta property="og:site" content="" />
+    <!-- website link -->
+    <meta property="og:title" content="" />
+    <!-- title shown in the actual shared post -->
+    <meta property="og:description" content="" />
+    <!-- description shown in the actual shared post -->
+    <meta property="og:image" content="" />
+    <!-- image link, make sure it's jpg -->
+    <meta property="og:url" content="" />
+    <!-- where do you want your post to link to -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Webpage Title -->
+    <title> PEMIRA BEM BIU </title>
+
+    <!-- Styles -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="vendors/css/bootstrap.css" rel="stylesheet" />
+    <link href="vendors/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="vendors/css/swiper.css" rel="stylesheet" />
+    <link href="vendors/css/magnific-popup.css" rel="stylesheet" />
+    <link href="vendors/css/styles.css" rel="stylesheet" />
+    
 
     <!--=============== BOXICONS ===============-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <!--=============== REMIX ICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-
+    
     <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="vendors/css/swiper-bundle.min.css">
 
-    <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="assets/css/styles2.css">
+    <!-- Favicon  -->
+    <link rel="icon" href="vendors/images/klogo2.png" />
+  </head>
+  <body data-spy="scroll" data-target=".fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light">
+      <div class="container">
+        <!-- Text Logo - Use this if you don't have a graphic logo -->
+        <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Gemdev</a> -->
 
-    <title>BEM BIU</title>
-</head>
+        <!-- Image Logo -->
+        <a class="navbar-brand logo-image" href="index.php"
+          ><img src="vendors/images/klogo2.png" alt="" class="i-home__img">
+        </a>
 
-<body>
-    <!--==================== HEADER ====================-->
-    
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="index.php" class="nav__logo">
-                <img src="assets/img/klogo2.png" alt="" class="nav__logo-img"> BEM BIU
-            </a>
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="#home" class="nav__link active-link">Home</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#news" class="nav__link">Pemberitahuan</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#about" class="nav__link">Ketua</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#paslon" class="nav__link">Paslon</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="vote.php" class="nav__link">Voting</a>
-                        </li>
-                    </ul>
+        <button
+          class="navbar-toggler p-0 border-0"
+          type="button"
+          data-toggle="offcanvas"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <div class="nav__close" id="nav-close">
-                        <i class="ri-close-line"></i>
-                    </div>
-                </div>
-
-                <div class="nav__btns">
-                    <!-- Theme change button -->
-                    <i class="ri-moon-line change-theme" id="theme-button"></i>
-
-                    <div class="nav__toggle" id="nav-toggle">
-                        <i class="ri-menu-line"></i>
-                    </div>
-                </div>
-
-        </nav>
-    </header>
-
-    <!--==================== HOME ====================-->
-        <div class="shape" style="height: 80vh; overflow: hidden; position: absolute;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-115.75,-254.46 C79.88,352.34 252.58,-101.28 280.22,268.33 L176.51,161.59 L-8.01,232.76 Z" style="stroke: none; fill: #66ffcc;"></path></svg></div>
-    
-    <main class="main">
-        <section class="section i__home" id="home">
-            <div class="i-home__container container grid">
-            
-
-                <div class="i-home__data">
-                    <h2 class="section__title i-home__title">PEMIRA BADAN <br> EKSEKUTIF MAHASISWA <br> UNIVERSITAS BINA INSANI </h2>
-                    <a href="#news" class="button">Mulai</a>
-                </div>
-
-                <div class="home__social">
-                        <span class="home__social-follow">Follow Us</span>
-
-                        <div class="home__social-links">
-                            <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
-                                <i class="ri-facebook-fill"></i>
-                            </a>
-                            <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
-                                <i class="ri-instagram-line"></i>
-                            </a>
-                            <a href="https://twitter.com/" target="_blank" class="home__social-link">
-                                <i class="ri-twitter-fill"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <img src="assets/img/klogo2.png" alt="" class="i-home__img">
-            </div>
-        </section>
-        <!--==================== NEWS ====================-->
-        <section class="section newsletter" id="news">
-            <div class="newsletter__container container grid">
-                <h2 class="section__title newsletter__title">PENJELASAN TENTANG HABISNYA MASA JABATAN KETTUA BEM</h2>
-                <p class="newsletter__description">
-                    Dalam hal ini bla bla bla
-                </p>
-            </div>
-        </section>
-
-        <!--==================== ABOUT KETUA ====================-->
-        <section class="section about container" id="about">
-            <div class="about__container grid">
-                <div class="about__data">
-                    <h2 class="section__title about__title">Data Diri Ketua </h2>
-                    <p class="about__description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt ad inventore est illo eveniet maxime consectetur, quidem vel quisquam illum autem dolore vitae ratione, asperiores iusto quas nemo quae reiciendis.
-                    </p>
-                </div>
-                <img src="assets/img/pp.jpg" alt="" class="about__img">
-            </div>
-        </section>
-
-        <!--==================== DATA PASLON ====================-->
-        <section class="swiper container section" id="paslon">
-            <div class="swiper home-swiper">
-                <h2 class="section__title swiper__title">Data Paslon</h2>
-                <div class="swiper-wrapper">
-                    <!-- PASLON 1 -->
-                    <section class="swiper-slide">
-                        <div class="home__content grid">
-                            <div class="paslon__group">
-
-                                <div class="paslon__img-overlay">
-                                    <img src="assets/img/pp.jpg" alt="" class="paslon__img-one">
-                                </div>
-
-                                <div class="paslon__img-overlay">
-                                    <img src="assets/img/ppcewe.jpg" alt="" class="paslon__img-two">
-                                </div>
-                            </div>
-
-                            <div class="home__data">
-                                <h3 class="home__subtitle">PASLON 1</h3>
-                                <h1 class="home__title">nama &<br> nama</h1>
-                                <p class="home__description">penjelasan lorem ipsum</p>
-
-                                <div class="about__details">
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        We always deliver on time.
-                                    </p>
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        We give you guides to protect and care for your plants.
-                                    </p>
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        We always come over for a check-up after sale.
-                                    </p>
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        100% money back guaranteed.
-                                    </p>
-                                </div>
-
-                                <div class="home__buttons">
-                                    <a href="#" class="button">Vote Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- PASLON 2 -->
-                    <section class="swiper-slide">
-                        <div class="home__content grid">
-                            <div class="paslon__group">
-
-                                <div class="paslon__img-overlay">
-                                    <img src="assets/img/pp.jpg" alt="" class="paslon__img-one">
-                                </div>
-
-                                <div class="paslon__img-overlay">
-                                    <img src="assets/img/ppcewe.jpg" alt="" class="paslon__img-two">
-                                </div>
-                            </div>
-
-                            <div class="home__data">
-                                <h3 class="home__subtitle">PASLON 2</h3>
-                                <h1 class="home__title">nama &<br> nama</h1>
-                                <p class="home__description">visi & misi mungkin
-                                </p>
-                                
-                                <div class="about__details">
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        We always deliver on time.
-                                    </p>
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        We give you guides to protect and care for your plants.
-                                    </p>
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        We always come over for a check-up after sale.
-                                    </p>
-                                    <p class="about__details-description">
-                                        <i class="ri-checkbox-fill about__details-icon"></i>
-                                        100% money back guaranteed.
-                                    </p>
-                                </div>
-
-                                <div class="home__buttons">
-                                    <a href="#" class="button">Vote Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
-
-        
+        <div
+          class="navbar-collapse offcanvas-collapse"
+          id="navbarsExampleDefault"
+        >
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="index.php"
+                > Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="#ketua"> Ketua </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="#paslon"> Paslon </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link page-scroll" href="vote.php"> Voting </a>
+            </li>
+          </ul>
+         
+        <!-- <img src="assets/img/klogo2.png" alt="" class="i-home__img"> -->
+</div>
+</section>
+            </span>
+          </span>
         </div>
-        <!--==================== VOTE ====================-->
-        <section class="section vote">
-            <div class="vote__container container grid">
-                <div class="vote__data">
-                    <h2 class="vote__title">penjelasan Kanapa harus ikut vote</h2>
-                    <a href="#" class="button">Go to VOTE</a>
-                </div>
-            </div>
-        </section>
-    </main>
+        <!-- end of navbar-collapse -->
+      </div>
+      <!-- end of container -->
+    </nav>
+    <!-- end of navbar -->
+    <!-- end of navigation -->
 
-    <!--==================== FOOTER ====================-->
-    <footer class="footer section">
-        <div class="footer__container container grid">
-            <div class="footer__content">
-                <a href="index.php" class="footer__logo">
-                    <img src="assets/img/klogo2.png" alt="" class="footer__logo-img"> BEM BIU
+    <!-- Header -->
+    <div class="header">
+      <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="text-container">
+              <h1 class="h1-large">
+                PEMIRA BADAN <br> EKSEKUTIF MAHASISWA <br> UNIVERSITAS BINA INSANI </h2>
+               </h1>
+              <p class="p-large">
+                Pemira adalah kegiatan pemilihan presiden mahasiswa BEM BiU dan Badan Perwakilan Mahasiswa (BPM) sebagai wujud demokrasi di kampus Universitas Bina Insani.
+              </p>
+              <a class="btn-solid-lg page-scroll" href="#statement"> Go to vote </a>
+            </div>
+            <!-- end of text-container -->
+          </div>
+          <!-- end of col -->
+          <div class="col-lg-6">
+            <div class="image-container">
+              <img
+                class="img-fluid"
+                src="vendors/images/klogo2.png"
+                alt="alternative"
+                 style="text-shadow: 2px 2px 4px #000000;;"
+              />
+            </div>
+            <!-- end of image-container -->
+          </div>
+          <!-- end of col -->
+        </div>
+        <!-- end of row -->
+      </div>
+      <!-- end of container -->
+    </div>
+    <!-- end of header -->
+          </div>
+          <!-- end of col -->
+        </div>
+        <!-- end of row -->
+      </div>
+      <!-- end of container -->
+    </div>
+    <!-- end of basic-1 -->
+    <!-- end of statement -->
+
+    <div id="ketua" class="features section basic-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="features-content">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div
+                    class="features-item first-feature wow fadeInUp"
+                    data-wow-duration="1s"
+                    data-wow-delay="0s" 
+                  >
+                    <div class="text-container" >
+                      <h3 class="about__title"> Data Diri Ketua </h3>
+                      <p class="p-large">
+                        <p class="about__description">Muhammad Aldisyah Rahman</p>
+                        <p class="about__description">Sistem Informasi 19A</p>
+                        <p class="about__description">21 Tahun</p>                              
+                        <p class="about__description">2019320021</p>   
+                      </p>
+                      <img src="vendors/images/ka-aldis.jpg" alt="alternative" />
+                      <h6 class="about__title">Muhammad Aldisyah Rahman, Ketua BEM 2022/2023</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Details 1 -->
+</section>
+
+ <!--==================== DATA PASLON ====================-->
+ <section class="swiper__sec section__sec" id="paslon">
+      <div class="swiper home-swiper container__cont">
+          <div class="swiper-wrapper">
+              
+              <!-- PASLON 1 -->
+              <section class="swiper-slide">
+                  <div class="home__content grid">
+                      <div class="paslon__group">
+
+                          <div class="paslon__img-overlay">
+                              <img src="vendors/images/paslon-1-1.jpg" alt="" class="paslon__img-one" >
+                          </div>
+                      </div>
+
+                      <div class="home__data">
+                          <h3 class="home__subtitle">PASLON 1</h3>
+                          <h2 class="home__title">Bagas Adji Priantomo &<br> Leliana Eka Fauziah</h2>
+                          <p class="home__description">Menjadikan BEM Bina Insani University sebaagai adah bagi mahasiswa untuk mengembangkan segala potensi yang ada sehingga terbentuk mahasiswa yang cerdas,kreatif,berprestasi,dan aktif dalam menjaga nama baik universitas yang unggul ditingkat nasional.</p>
+
+                          <div class="about__details">
+                              <p class="about__details-description">
+                                  <i class="fas fa-square about__details-icon"></i>
+                                  1. Memfasilitasi ruang kreasi dan inovasi untuk seluruh kegiatan akademik non akademik mahasiswa
+                              </p>
+                              <p class="about__details-description">
+                                  <i class="fas fa-square about__details-icon"></i>
+                                  2. Meningkatkan pelayanan aspirasi dan advokasi yang responsif dan solutif bagi mahasiswa dan universitas
+                              </p>
+                          </div>
+
+                          <div class="home__buttons">
+                              <a href="#details-lightbox" class="btn-solid-reg popup-with-move-anim">Selengkapnya</a>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+
+              <!-- PASLON 2 -->
+              <section class="swiper-slide">
+                  <div class="home__content grid">
+                      <div class="paslon__group">
+
+                          <div class="paslon__img-overlay">
+                              <img src="vendors/images/paslon-2-2.jpg" alt="" class="paslon__img-one" >
+                          </div>
+                      </div>
+
+                      <div class="home__data">
+                          <h3 class="home__subtitle">PASLON 2</h3>
+                          <h1 class="home__title">Iqbal Maulana Rozak &<br> Jundi Al Hafidz</h1>
+                          <p class="home__description">Menjadi katalisator atau wadah inkubasi berkembang bagi mahasiswa agar terciptanya mahasiswa yang adaktif,kreatif dan solutif.
+                          </p>
+                          
+                          <div class="about__details">
+                              <p class="about__details-description">
+                                  <i class="fas fa-square about__details-icon"></i>
+                                  1. Menjadikan BEM sebagai ladang dalam mengembangkan minat dan bakat mahasiswa.
+                              </p>
+                              <p class="about__details-description">
+                                  <i class="fas fa-square about__details-icon"></i>
+                                  2. Menciptakan dan mengembangkan nilai pengabdian serta pelayanan mahasiswa terhadap masyarakat luas. </p>
+                          </div>
+
+                          <div class="home__buttons">
+                              <a href="#details-lightbox-2" class="btn-solid-reg popup-with-move-anim">Selangkapnya</a>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+          </div>
+          <div class="swiper-pagination"></div>
+      </div>
+  </section>
+  
+    <!-- Details Lightbox -->
+    <!-- Lightbox -->
+    <div id="details-lightbox" class="lightbox-basic zoom-anim-dialog mfp-hide">
+      <div class="row">
+        <button title="Close (Esc)" type="button" class="mfp-close x-button">
+          ×
+        </button>
+        <div class="col-lg-8">
+          <div class="image-container">
+            <img
+              class="img-fluid"
+              src="vendors/images/paslon-1-1.jpg"
+              alt="alternative"
+            />
+          </div>
+          <!-- end of image-container -->
+        </div>
+        <!-- end of col -->
+        <div class="col-lg-4">
+          <h3>Visi</h3>
+          <hr />
+          <p>
+            Menjadikan BEM Bina Insani University sebaagai adah bagi mahasiswa untuk mengembangkan segala potensi yang ada sehingga terbentuk mahasiswa yang cerdas,kreatif,berprestasi,dan aktif dalam menjaga nama baik universitas yang unggul ditingkat nasional.
+          </p>
+          <h4> Misi </h4>
+          <ul class="list-unstyled li-space-lg">
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">1. Memfasilitasi ruang kreasi dan inovasi untuk seluruh kegiatan akademik non akademik mahasiswa</div>
+            </li>
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">2. Meningkatkan pelayanan aspirasi dan advokasi yang responsif dan solutif bagi mahasiswa dan universitas</div>
+            </li>
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">3.	Mendorong dan membantu mahasiswa memberikan kontribusi positif dan berperan aktif dalam menjaga nama baik universitas</div>
+            </li>
+          </ul>
+          <button class="btn-outline-reg mfp-close as-button" type="button">
+            Back
+          </button>
+        </div>
+        <!-- end of col -->
+      </div>
+      <!-- end of row -->
+    </div>
+    
+    <!-- end of lightbox-basic -->
+    <!-- end of lightbox -->
+    <!-- end of details lightbox -->
+
+    <!-- end of basic-3 -->
+    <!-- end of details 2 -->
+     <!-- Lightbox 2 -->
+     <div id="details-lightbox-2" class="lightbox-basic zoom-anim-dialog mfp-hide">
+      <div class="row">
+        <button title="Close (Esc)" type="button" class="mfp-close x-button">
+          ×
+        </button>
+        <div class="col-lg-8">
+          <div class="image-container">
+            <img
+              class="img-fluid"
+              src="vendors/images/paslon-2-2.jpg"
+              alt="alternative"
+            />
+          </div>
+          <!-- end of image-container -->
+        </div>
+        <!-- end of col -->
+        <div class="col-lg-4">
+          <h3> Visi </h3>
+          <hr />
+          <p>
+            Menjadi katalisator atau wadah inkubasi berkembang bagi mahasiswa agar terciptanya
+            mahasiswa yang adaktif,kreatif dan solutif.
+          </p>
+          <h4> Misi </h4>
+          <ul class="list-unstyled li-space-lg">
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">1. Menjadikan BEM sebagai opsi mediator antara universitas dengan mahasiswa dalam menyuarakan suaranya baik itu dalam berkomunikasi atau berdiskusi, serta menjadi penampung dan pelaksana dari aspirasi mahasiswa.</div>
+            </li>
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">2. menjadikan BEM sebagai ladang dalam mengembangkan minat dan bakat mahasiswa.</div>
+            </li>
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">3. Menciptakan dan mengembangkan nilai pengabdian serta pelayanan mahasiswa terhadap masyarakat luas.</div>
+            </li>
+            <li class="media">
+              <i class="fas fa-check"></i>
+              <div class="media-body">4. Menciptakan sistem kerja BEM yang lebih dinamis dan inovatif sebagai upaya optimalisasi peran fungsi dan sumberdaya organisasi dan pengembangan dari BEM terdahulu.</div>
+            </li>
+          </ul>
+          <button class="btn-outline-reg mfp-close as-button" type="button">
+            Back
+          </button>
+        </div>
+        <!-- end of col -->
+      </div>
+      <!-- end of row -->
+    </div>
+    <!-- end of lightbox-basic -->
+    <!-- end of lightbox -->
+    <!-- end of details lightbox -->
+
+
+    <!-- Features -->
+
+    <!-- Statistics -->
+    <div class="counter">
+
+    </div>
+    <!-- end of counter -->
+    <!-- end of statistics -->
+
+    <!-- Invitation -->
+    <div class="basic-6">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="text-container bg-gray">
+              <h4>
+               Sudah Yakin Dengan Suaramu?
+              </h4>
+              <a class="btn-solid-lg" href="#your-link" style="background-color:#093d77;color:white">Ayo Vote</a>
+            </div>
+            <!-- end of text-container -->
+          </div>
+          <!-- end of col -->
+        </div>
+        <!-- end of row -->
+      </div>
+      <!-- end of container -->
+    </div>
+    <!-- end of basic-6 -->
+    <!-- end of invitation -->
+
+    <!-- Contact -->
+    <div id="contact" class="form-1">
+      <!-- end of container -->
+    </div>
+    <!-- end of form-1 -->
+    <!-- end of contact -->
+
+    
+
+    <!-- Footer -->
+    <div class="footer bg-gray">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="social-container">
+              <span class="fa-stack">
+                <a href="https://instagram.com/bem.bina_insani?igshid=YmMyMTA2M2Y=">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-instagram fa-stack-1x"></i>
                 </a>
-
-
-                <div class="footer__social">
-                    <a href="https://www.facebook.com/" target="_blank" class="footer__social-link">
-                        <i class='bx bxl-facebook'></i>
-                    </a>
-                    <a href="https://www.instagram.com/" target="_blank" class="footer__social-link">
-                        <i class='bx bxl-instagram-alt'></i>
-                    </a>
-                    <a href="https://twitter.com/" target="_blank" class="footer__social-link">
-                        <i class='bx bxl-twitter'></i>
-                    </a>
-                </div>
+              </span>
+              <span class="fa-stack">
+                <a href="https://www.youtube.com/channel/UCcXmOz5WThBf9soP0TKrQJA">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-youtube fa-stack-1x"></i>
+                </a>
+              </span>
             </div>
-
-            <div class="footer__content">
-                <h3 class="footer__title">About</h3>
-
-                <ul class="footer__links">
-                    <li>
-                        <a href="#" class="footer__link">About Us</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Features</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">News</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="footer__content">
-                <h3 class="footer__title">Our Services</h3>
-
-                <ul class="footer__links">
-                    <li>
-                        <a href="#" class="footer__link">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Discounts</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Shipping mode</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="footer__content">
-                <h3 class="footer__title">Our Company</h3>
-
-                <ul class="footer__links">
-                    <li>
-                        <a href="#" class="footer__link">Blog</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">About us</a>
-                    </li>
-                    <li>
-                        <a href="#" class="footer__link">Our mision</a>
-                    </li>
-                </ul>
-            </div>
+            <!-- end of social-container -->
+          </div>
+          <!-- end of col -->
         </div>
-    </footer>
+        <!-- end of row -->
+      </div>
+      <!-- end of container -->
+    </div>
+    <!-- end of footer -->
+    <!-- end of footer -->
 
-    <!--=============== SCROLL UP ===============-->
-    <a href="#" class="scrollup" id="scroll-up">
-        <i class='bx bx-up-arrow-alt scrollup__icon'></i>
-    </a>
+    <!-- Copyright -->
+    <div class="copyright bg-gray">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p class="p-small">
+              Copyright © <a class="no-line" href="#your-link">BEM BINA INSANI</a>
+            </p>
+          </div>
+          <!-- end of col -->
+        </div>
+      
+          <!-- end of col -->
+        </div>
+        <!-- enf of row -->
+      </div>
+      <!-- end of container -->
+    </div>
+    <!-- end of copyright -->
+    <!-- end of copyright -->
 
-    <!--=============== SCROLL REVEAL ===============-->
-    <script src="assets/js/scrollreveal.min.js"></script>
-
+    <!-- Scripts -->
+    <script src="vendors/js/jquery.min.js"></script>
+    <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="vendors/js/bootstrap.min.js"></script>
+    <!-- Bootstrap framework -->
+    <script src="vendors/js/jquery.easing.min.js"></script>
+    <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script src="vendors/js/swiper.min.js"></script>
+    <!-- Swiper for image and text sliders -->
+    <script src="vendors/js/jquery.magnific-popup.js"></script>
+    <!-- Magnific Popup for lightboxes -->
+    <script src="vendors/js/scripts.js"></script>
+    
     <!--=============== SWIPER JS ===============-->
-    <script src="assets/js/swiper-bundle.min.js"></script>
-
+    <script src="vendors/js/swiper-bundle.min.js"></script>
     <!--=============== MAIN JS ===============-->
-    <script src="assets/js/main.js"></script>
-
-
+    <script src="vendors/js/main.js"></script>
+    <!-- Custom scripts -->
+  </body>
 </html>
