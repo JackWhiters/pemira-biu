@@ -257,7 +257,7 @@ $query2 = mysqli_query($koneksi, "SELECT kode_akses FROM tbl_akses WHERE nim='$n
                     <form action="" method="post">
                       <div class="form-group">
                         <label>NIM</label>
-                        <input type="text" name="nim" required="required" placeholder="Masukan NIM..." class="form-control" autocomplete="off">
+                        <input type="text" name="nim" required="required" placeholder="Masukan NIM..." class="form-control" autocomplete="off" maxlength="10">
                       </div>
                       <br>
                       <div class="form-group">
