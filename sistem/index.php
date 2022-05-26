@@ -205,7 +205,7 @@ if(isset($_POST['simpan'])) {
                     left: 0;
                     width: 100%;
                     height: 100%;" 
-  width="660" height="371" class="video_bem" src="https://www.youtube.com/embed/fuadn7oMYGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  width="660" height="371" class="video_bem" src="https://www.youtube.com/embed/lcT6spQSDr0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
         </section>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#01c05d" fill-opacity="1" d="M0,224L60,202.7C120,181,240,139,360,154.7C480,171,600,245,720,250.7C840,256,960,192,1080,154.7C1200,117,1320,107,1380,101.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
@@ -244,23 +244,22 @@ if(isset($_POST['simpan'])) {
     </div>
 
     <!--AKHIR VIEW MODAL !-->
-            
-                    <div class="alert alert-success" style="background-color: white;">
+                               <div class="alert alert-success" style="background-color: white;">
                         <form action="" method="post">
                             <div class="row">
                                 <?php
                                 $data_paslon = mysqli_query($koneksi,"SELECT * FROM data_paslon");
                                 while($d = mysqli_fetch_array($data_paslon)){
                                 ?>
-                                <div class="col-sm-12 col-xl-6">
+                                <div class="col-sm-12 col-md-6 table-responsive-sm">
                                     <table class="table table-striped table-bordered table-hover">
                                         <tr>
                                             <td colspan="2" style="background-color: #fffff; color: black; font-size: 50px; text-align: center;"><b><?php echo $d['no_urut']; ?></b>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><img style="width: 100%;" src="<?php echo "foto/".$d['gambar1']; ?>"></td>
-                                            <td><img style="width: 100%;" src="<?php echo "foto/".$d['gambar2']; ?>"></td>
+                                            <td class="col"><img class="img-fluid" style="max-width: 100%;display:block;height:auto;" src="<?php echo "foto/".$d['gambar1']; ?>"></td>
+                                            <td class="col"><img class="img-fluid" style="max-width: 100%;display:block;height:auto;" src="<?php echo "foto/".$d['gambar2']; ?>"></td>
                                         </tr>
                                         <tr>
                                             <td align="center"><h2><?php echo $d['nm_paslon_ketua']; ?></h2></td>
@@ -276,12 +275,13 @@ if(isset($_POST['simpan'])) {
                                     </table>
                                 </div>
                                 <?php } ?>
-                                <input style="color: white; font-size: 20px; padding: 10px; border-radius: 15px; width: 100%;" type="submit" name="simpan" value="Vote" class="btn btn-success" onclick="return confirm('YAKIN DENGAN PILIHAN ANDA')">
+                                <input style="color: white; font-size: auto; padding: 10px; border-radius: 15px; width: 100%;" type="submit" name="simpan" value="Vote" class="btn btn-success" onclick="return confirm('YAKIN DENGAN PILIHAN ANDA')">
                             </div>    
                         </form> 
                     </div>
                 </div>
             </div>
+                 
             <!-- Surat Suara End -->
 
 
