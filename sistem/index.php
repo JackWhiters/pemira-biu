@@ -69,6 +69,7 @@ if(isset($_POST['simpan'])) {
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -187,15 +188,26 @@ if(isset($_POST['simpan'])) {
                         <br>
                         <h1 class="m-0 font-weight-bold text-center" style="color : dark;">DEBAT PASLON KETUA</h1>
                         <h1 class="mb-3 font-weight-bold text-center" style="color : dark;">BEM BIU 2022/2023</h1>
+
                         <!--==================== VIDEO ====================-->
         <section class="video section mt-5" id="video">
-            <div class="video__container container grid">
-                <div class="video__content">
-                    <iframe width="660" height="371" class="video_bem" src="https://www.youtube.com/embed/fuadn7oMYGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="videowrapper" style="
+                float: none;
+                clear: both;
+                width: 100%;
+                position: relative;
+                padding-bottom: 56.25%;
+                padding-top: 25px;
+                height: 0;">
+                    <iframe style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;" 
+  width="660" height="371" class="video_bem" src="https://www.youtube.com/embed/fuadn7oMYGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-            </div>
         </section>
-                    </div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#01c05d" fill-opacity="1" d="M0,224L60,202.7C120,181,240,139,360,154.7C480,171,600,245,720,250.7C840,256,960,192,1080,154.7C1200,117,1320,107,1380,101.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
                     <div class="card-body" style="background-color: #01c05d;">
                         <h3 class="m-0 font-weight-bold text-center" style="color: white;">CALON KETUA DAN WAKIL KETUA</h3>
