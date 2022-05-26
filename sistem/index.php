@@ -182,12 +182,26 @@ if(isset($_POST['simpan'])) {
                         <h1 class="m-0 font-weight-bold text-center" style="color : white;">PEMILIHAN RAYA</h1>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#01c05d" fill-opacity="1" d="M0,160L40,144C80,128,160,96,240,90.7C320,85,400,107,480,144C560,181,640,235,720,256C800,277,880,267,960,245.3C1040,224,1120,192,1200,165.3C1280,139,1360,117,1400,106.7L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
-                    <div class="card-body">
-                                
-                        <h3 class="m-0 font-weight-bold text-center">CALON KETUA DAN WAKIL KETUA</h3>
-                        <h3 class="m-0 font-weight-bold text-center">BADAN EKSEKUTIF MAHASISWA</h3>
-                        <h3 class="m-0 font-weight-bold text-center">UNIVERSITAS BINA INSANI</h3>
-                        <h3 class="m-0 font-weight-bold text-center">TAHUN 2022</h3>
+                    <div class="card-body py-3">
+                        <br>
+                        <br>
+                        <h1 class="m-0 font-weight-bold text-center" style="color : dark;">DEBAT PASLON KETUA</h1>
+                        <h1 class="mb-3 font-weight-bold text-center" style="color : dark;">BEM BIU 2022/2023</h1>
+                        <!--==================== VIDEO ====================-->
+        <section class="video section mt-5" id="video">
+            <div class="video__container container grid">
+                <div class="video__content">
+                    <iframe width="660" height="371" class="video_bem" src="https://www.youtube.com/embed/fuadn7oMYGs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#01c05d" fill-opacity="1" d="M0,224L60,202.7C120,181,240,139,360,154.7C480,171,600,245,720,250.7C840,256,960,192,1080,154.7C1200,117,1320,107,1380,101.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+                    <div class="card-body" style="background-color: #01c05d;">
+                        <h3 class="m-0 font-weight-bold text-center" style="color: white;">CALON KETUA DAN WAKIL KETUA</h3>
+                        <h3 class="m-0 font-weight-bold text-center" style="color: white;">BADAN EKSEKUTIF MAHASISWA</h3>
+                        <h3 class="m-0 font-weight-bold text-center" style="color: white;">UNIVERSITAS BINA INSANI</h3>
+                        <h3 class="m-0 font-weight-bold text-center" style="color: white;">TAHUN 2022</h3>
                         <div class="text-center"> 
                         <br>
                         <br>
