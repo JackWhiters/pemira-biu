@@ -167,6 +167,9 @@
             <div class="features-content">
               <div class="row">
                 <div class="col-lg-12">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
                   <div
                     class="features-item first-feature wow fadeInUp"
                     data-wow-duration="1s"
@@ -180,10 +183,41 @@
                         <p class="about__description">21 Tahun</p>                              
                         <p class="about__description">2019320021</p>   
                       </p>
-                      <img src="vendors/images/ka-aldis.jpg" alt="alternative" />
-                      <h6 class="about__title">Muhammad Aldisyah Rahman, Ketua BEM 2022/2023</h6>
+                      <img src="vendors/images/ka-aldis.jpg" alt="ketua 2021/2022" />
+                      <h6 class="about__title">Muhammad Aldisyah Rahman, Ketua BEM 2021-2022</h6>
                     </div>
                   </div>
+          </div>
+          <div class="carousel-item">
+                  <div
+                    class="features-item first-feature wow fadeInUp"
+                    data-wow-duration="1s"
+                    data-wow-delay="0s" 
+                  >
+                    <div class="text-container" >
+                      <h3 class="about__title"> Data Diri Wakil Ketua </h3>
+                      <p class="p-large">
+                        <p class="about__description">Raden Fitria Dwiyani Putri</p>
+                        <p class="about__description">Akuntansi D3</p>
+                        <p class="about__description">22 Tahun</p>                              
+                        <p class="about__description">2019210030</p>   
+                      </p>
+                      <img src="vendors/images/ka-raden.jpeg" alt="wakil ketua 2021/2022" />
+                      <h6 class="about__title">Raden Fitria Dwiyani Putri, Wakil Ketua BEM 2021-2022</h6>
+                    </div>
+                  </div>
+              </div>
+            </div>
+<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+               
                 </div>
               </div>
             </div>
