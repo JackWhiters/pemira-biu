@@ -12,7 +12,8 @@ if ( !isset($_SESSION["login"]) ) {
 if(!isset($_SESSION['nim'])){
     header("location:../index.php");
  }
- 
+
+
  
 
 
@@ -20,17 +21,16 @@ if(isset($_POST['simpan'])) {
   date_default_timezone_set('Asia/jakarta');
   $waktu = date('H:i:sa');
   $nim = $_SESSION['nim'];
-  $kode_akses= $_SESSION['kode_akses'];
   $nomor_paslon =$_POST['nomor_paslon'];
 
-  $cek = mysqli_num_rows(mysqli_query($koneksi,"SELECT * FROM tbl_paslon WHERE kode_akses='$kode_akses'"));
+  $cek = mysqli_num_rows(mysqli_query($koneksi,"SELECT * FROM tbl_paslon WHERE nim='$nim'"));
   if ($cek > 0){
     echo"<script>window.alert('Anda tidak bisa melakukan voting lagi')
           window.location='index.php'</script>";
         }else {
           mysqli_query($koneksi, "UPDATE tbl_dpt SET status='(Sudah Memilih)', waktu='$waktu' WHERE nim='$nim'");
-          mysqli_query($koneksi,"INSERT INTO tbl_paslon(kode_akses, nomor_paslon)
-            VALUES ('$kode_akses','$nomor_paslon')");
+          mysqli_query($koneksi,"INSERT INTO tbl_paslon(nim, nomor_paslon)
+            VALUES ('$nim','$nomor_paslon')");
 
           echo"<script>window.alert('Voting Berhasil')
           window.location='index.php'</script>";
@@ -71,8 +71,21 @@ if(isset($_POST['simpan'])) {
     <link href="css/style.css" rel="stylesheet">
 
 </head>
+ <!--Start of Tawk.to Script-->
 
 <body>
+    <script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/62910c46b0d10b6f3e74656b/1g439ft58';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
     <div class="container-fluid position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
