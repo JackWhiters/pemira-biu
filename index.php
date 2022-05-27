@@ -57,6 +57,19 @@
     <!-- Favicon  -->
     <link rel="icon" href="vendors/images/klogo2.png" />
   </head>
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/62910c46b0d10b6f3e74656b/1g439ft58';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
   <body data-spy="scroll" data-target=".fixed-top">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top navbar-light">
